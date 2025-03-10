@@ -1,0 +1,12 @@
+[workspace]
+restore_data_on_startup = True
+save_data_on_exit = True
+save_history = True
+save_non_project_files = False
+project_type = 'empty-project-type'
+recent_files = ['src\\fuel_consumption_analysis\\data_cleaning.py', 'src\\fuel_consumption_analysis\\data_analysis.py', '..\\python-class-25\\py_scripts\\test_dataset.py']
+
+[main]
+version = 0.2.0
+recent_files = []
+
