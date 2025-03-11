@@ -48,13 +48,13 @@ class DataCleaning:
             return self.dataset
         else:
             for column in self.dataset.columns:
-                if self.dataset[column].dtype == "O":  # categorical variables
-                    self.dataset[column].fillna(
-                        self.dataset[column].mode()[0], inplace=True
+                if self.dataset[column].dtype == "object":
+                    self.dataset.loc[:, column] = self.dataset[column].fillna(
+                        self.dataset[column].mode()[0]
                     )
                 else:
-                    self.dataset[column].fillna(
-                        self.dataset[column].mean(), inplace=True
+                    self.dataset.loc[:, column] = self.dataset[column].fillna(
+                        self.dataset[column].mean()
                     )
             return self.dataset
 
@@ -72,7 +72,7 @@ class DataCleaning:
         if duplicate_rows.empty:
             print("No Duplicate Rows in Dataset.")
         else:
-            print("Duplicate Rows :\n", duplicate_rows)
+            print("Duplicate Rows:")
         return duplicate_rows
 
     def remove_duplicates(self):
@@ -85,6 +85,4 @@ class DataCleaning:
             Dataset without duplicates.
 
         """
-        return self.dataset.drop_duplicates().reset.index(
-            drop=True
-        )  # reset index after remove
+        return self.dataset.drop_duplicates()
