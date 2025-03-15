@@ -61,16 +61,16 @@ class DataVisualization:
         plt.title(f"Line Plot: {x_axis} vs {y_axis}")
         plt.show()
 
-    def bar_plot(self, x_axis, y_axis):
+    def bar_plot(self, x_axis, y_axis, hue_column):
         """
         Create a line plot to compare categories against a numerical variable.
         Parameters:
             x_axis: Column name for x_axis (Categorical).
             y_axis: Column name for x_axis (Numerical).
+            hue_column: Column name to group data by different categories (Categorical)
         """
 
         plt.figure(figsize=(10, 6))
-        hue_column = "MAKE" if "MAKE" in self.dataset.columns else None
         sns.barplot(
             x=x_axis,
             y=y_axis,
