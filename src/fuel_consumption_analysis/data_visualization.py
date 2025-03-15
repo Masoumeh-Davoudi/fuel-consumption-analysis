@@ -30,35 +30,53 @@ class DataVisualization:
 
     def scatter_plot(self, x_axis, y_axis, hue_column):
         """
-        Creates a scatter plots to visualize the relationship between two numerical features.
+        Creates a scatter plots to visualize the relationship between two
+        numerical features.
 
         Parameters:
             x_axis (str): Column name for the x_axis (Numerical).
             y_axis (str): Column name for the y_axis (Numerical).
             hue_column: The points are colored based on the hue_column.
+
+        If there are too many unique categories in hue column, only the top 5
+        will be displayed while others are grouped as 'other'
         """
 
+        dataset_copy = self.dataset.copy()
+
+        top_categories = dataset_copy[hue_column].value_counts().index[:5]
+
+        dataset_filtered = dataset_copy[
+            dataset_copy[hue_column].isin(top_categories)
+        ]
+
+        aggregated_data = (
+            dataset_filtered.groupby([x_axis, hue_column])[y_axis]
+            .mean()
+            .reset_index()
+        )
         plt.figure(figsize=(8, 6))
-        sns.scatterplot(x=x_axis, y=y_axis, hue=hue_column, data=self.dataset)
+        sns.scatterplot(
+            x=x_axis,
+            y=y_axis,
+            hue=hue_column,
+            data=aggregated_data,
+            s=100,
+            edgecolor="black",
+            alpha=0.8,
+        )
         plt.xlabel(x_axis)
         plt.ylabel(y_axis)
-        plt.title(f"Scatter Plot: {x_axis} vs {y_axis}")
-        plt.show()
-
-    def line_plot(self, x_axis, y_axis, hue_column):
-        """
-        Create a line plot to show trends between two numerical variable.
-
-        Parameters:
-            x_axis: Column name for x_axis (Numerical).
-            y_axis: Column name for x_axis (Numerical).
-            hue_column: The lines are colored based on the hue_column.
-        """
-        plt.figure(figsize=(8, 6))
-        sns.lineplot(x=x_axis, y=y_axis, hue=hue_column, data=self.dataset)
-        plt.xlabel(x_axis)
-        plt.ylabel(y_axis)
-        plt.title(f"Line Plot: {x_axis} vs {y_axis}")
+        plt.title(f"Scatter Plot: {x_axis} vs Mean {y_axis}")
+        plt.legend(
+            title=hue_column,
+            title_fontsize=14,
+            fontsize=10,
+            frameon=True,
+            loc="upper left",
+            bbox_to_anchor=(1, 1),
+        )
+        plt.tight_layout()
         plt.show()
 
     def bar_plot(self, x_axis, y_axis, hue_column):
@@ -67,21 +85,35 @@ class DataVisualization:
         Parameters:
             x_axis: Column name for x_axis (Categorical).
             y_axis: Column name for x_axis (Numerical).
-            hue_column: Column name to group data by different categories (Categorical)
+            hue_column: Column name to group data by different categories
+            (Categorical)
+        If there are too many unique categories in hue column, only the top 5
+        will be displayed while others are grouped as 'other'
         """
 
-        plt.figure(figsize=(10, 6))
+        palette = sns.color_palette("Set2")
+
+        # Plot
+        plt.figure(figsize=(12, 6))
         sns.barplot(
             x=x_axis,
             y=y_axis,
             hue=hue_column,
+            palette=palette,
             data=self.dataset,
             estimator=np.mean,
+            errorbar=None,
         )
-        plt.xlabel(x_axis)
-        plt.ylabel(y_axis)
-        plt.title(f"Bar Plot: {x_axis} vs {y_axis}")
-        plt.xticks(rotation=45)
+
+        plt.title("Average CO₂ Emissions by Fuel Type", fontsize=14)
+        plt.xlabel("Fuel Type", fontsize=12)
+        plt.ylabel("CO₂ Emissions (g/km)", fontsize=12)
+        plt.legend(
+            title=hue_column,
+            bbox_to_anchor=(1, 1),
+            loc="upper left",
+            fontsize=10,
+        )
         plt.show()
 
     def box_plot(self, x_axis, y_axis):
@@ -144,7 +176,7 @@ class DataVisualization:
         """
         plt.figure(figsize=(6, 8))
         sns.countplot(
-            x=column,
+            x=x_axis,
             data=self.dataset,
             order=self.dataset[x_axis].value_counts().index,
         )
