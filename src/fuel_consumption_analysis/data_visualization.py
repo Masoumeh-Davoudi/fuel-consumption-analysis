@@ -7,67 +7,54 @@ Created on Mon Mar 10 22:15:16 2025
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn.preprocessing import LabelEncoder
-import pandas as pd
 
 
 class DataVisualization:
+    """
+    A class for visualizing data using Seaborn and Matplotlib.
+
+    Atrributes:
+        dataset : the dataset used for visualization.
+
+    """
 
     def __init__(self, dataset):
+        """
+        Initializes the dataset in the DataVisualization class.
+
+        Parameters:
+            dataset: A pandas csv file containing the data to be visualized.
+        """
+
         self.dataset = dataset
-        self.dataset.columns = self.dataset.columns.str.replace(
-            " ", "_"
-        ).str.upper()
-        self.switch_case = {
-            "scatterplot": self.scatter_plot,
-            "lineplot": self.line_plot,
-            "barplot": self.bar_plot,
-            "boxplot": self.box_plot,
-            "histplot": self.histogram_plot,
-            "heatmap": self.heat_map_plot,
-        }
 
-        self.categorical_cols = [
-            "YEAR",
-            "MAKE",
-            "MODEL",
-            "VEHICLE_CLASS",
-            "TRANSMISSION",
-            "FUEL",
-        ]
-        self.numerical_cols = [
-            "ENGINE_SIZE",
-            "CYLINDERS",
-            "FUEL_CONSUMPTION",
-            "COEMISSIONS",
-        ]
+    def scatter_plot(self, x_axis, y_axis, hue_column):
+        """
+        Creates a scatter plots to visualize the relationship between two numerical features.
 
-    def scatter_plot(self, x_axis, y_axis):
-        if not np.issubdtype(
-            self.dataset[x_axis].dtype, np.number
-        ) or not np.issubdtype(self.dataset[y_axis].dtype, np.number):
-            print(
-                f"Error: Scatter plots require numerical columns. '{x_axis}' or '{y_axis}' is not numerical."
-            )
-            return
-        plt.figure(figsize=(8, 8))
-        hue_column = "MAKE" if "MAKE" in self.dataset.columns else None
+        Parameters:
+            x_axis (str): Column name for the x_axis (Numerical).
+            y_axis (str): Column name for the y_axis (Numerical).
+            hue_column: The points are colored based on the hue_column.
+        """
+
+        plt.figure(figsize=(8, 6))
         sns.scatterplot(x=x_axis, y=y_axis, hue=hue_column, data=self.dataset)
         plt.xlabel(x_axis)
         plt.ylabel(y_axis)
         plt.title(f"Scatter Plot: {x_axis} vs {y_axis}")
         plt.show()
 
-    def line_plot(self, x_axis, y_axis):
-        if not np.issubdtype(
-            self.dataset[x_axis].dtype, np.number
-        ) or not np.issubdtype(self.dataset[y_axis].dtype, np.number):
-            print(
-                f"Error: Line plots require numerical columns. '{x_axis}' or '{y_axis}' is not numerical."
-            )
-            return
-        plt.figure(figsize=(8, 8))
-        hue_column = "MAKE" if "MAKE" in self.dataset.columns else None
+    def line_plot(self, x_axis, y_axis, hue_column):
+        """
+        Create a line plot to show trends between two numerical variable.
+
+        Parameters:
+            x_axis: Column name for x_axis (Numerical).
+            y_axis: Column name for x_axis (Numerical).
+            hue_column: The lines are colored based on the hue_column.
+        """
+        plt.figure(figsize=(8, 6))
         sns.lineplot(x=x_axis, y=y_axis, hue=hue_column, data=self.dataset)
         plt.xlabel(x_axis)
         plt.ylabel(y_axis)
@@ -75,18 +62,14 @@ class DataVisualization:
         plt.show()
 
     def bar_plot(self, x_axis, y_axis):
-        if np.issubdtype(self.dataset[x_axis].dtype, np.number):
-            print(
-                f"Error: Bar plots require a categorical x-axis. '{x_axis}' is not categorical."
-            )
-            return
+        """
+        Create a line plot to compare categories against a numerical variable.
+        Parameters:
+            x_axis: Column name for x_axis (Categorical).
+            y_axis: Column name for x_axis (Numerical).
+        """
 
-        if not np.issubdtype(self.dataset[y_axis].dtype, np.number):
-            print(
-                f"Error: Bar plots require a numerical y-axis. '{y_axis}' is not numerical."
-            )
-            return
-        plt.figure(figsize=(8, 8))
+        plt.figure(figsize=(10, 6))
         hue_column = "MAKE" if "MAKE" in self.dataset.columns else None
         sns.barplot(
             x=x_axis,
@@ -102,18 +85,16 @@ class DataVisualization:
         plt.show()
 
     def box_plot(self, x_axis, y_axis):
-        if np.issubdtype(self.dataset[x_axis].dtype, np.number):
-            print(
-                f"Error: Box plots require a categorical x-axis. '{x_axis}' is not categorical."
-            )
-            return
+        """
+        Creates a box plot to show the distribution of a numerical variable across categorical variable.
 
-        if not np.issubdtype(self.dataset[y_axis].dtype, np.number):
-            print(
-                f"Error: Box plots require a numerical y-axis. '{y_axis}' is not numerical."
-            )
-            return
-        plt.figure(figsize=(8, 8))
+        Parameters:
+            x_axis: Column name for x_axis (Categorical).
+            y_axis: Column name for x_axis (Numerical).
+
+        Box plots help to identify the spread of the data and the outliers.
+        """
+        plt.figure(figsize=(10, 6))
         sns.boxplot(x=x_axis, y=y_axis, data=self.dataset)
         plt.xlabel(x_axis)
         plt.ylabel(y_axis)
@@ -122,12 +103,15 @@ class DataVisualization:
         plt.show()
 
     def histogram_plot(self, x_axis):
-        if not np.issubdtype(self.dataset[x_axis].dtype, np.number):
-            print(
-                f"Error: Histograms require a numerical column. '{x_axis}' is not numerical."
-            )
-            return
-        plt.figure(figsize=(8, 8))
+        """
+        Creates a histogram to show the distribution of a numerical variables.
+
+        Parameters:
+            x_axis: Column name for x_axis (Numerical)
+
+        A KDE (Kernel Density Estimate) curve is overlaid on the histogram.
+        """
+        plt.figure(figsize=(10, 8))
         sns.histplot(x=x_axis, data=self.dataset, bins=10, kde=True)
         plt.xlabel(x_axis)
         plt.ylabel("Frequency")
@@ -136,7 +120,13 @@ class DataVisualization:
         plt.show()
 
     def heat_map_plot(self):
-        plt.figure(figsize=(8, 8))
+        """
+        Creates a heatmap to visualize the correlation matrix of  the numerical variables.
+
+        The correclation heatmap helps identify the relationship between numerical variables.
+
+        """
+        plt.figure(figsize=(10, 8))
         numerical_df = self.dataset.select_dtypes(include=[np.number])
         corr = numerical_df.corr()
         sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")
@@ -144,102 +134,22 @@ class DataVisualization:
         plt.xticks(rotation=45)
         plt.show()
 
-    def plot_help_table(self):
-        help_table = {
-            "Plot Type": [
-                "Scatter Plot",
-                "Line Plot",
-                "Bar Plot",
-                "Box Plot",
-                "Histogram",
-                "Heatmap",
-            ],
-            "X-axis Data Type": [
-                "Numerical",
-                "Numerical",
-                "Categorical",
-                "Categorical",
-                "Numerical",
-                "Numerical (All)",
-            ],
-            "Y-axis Data Type": [
-                "Numerical",
-                "Numerical",
-                "Numerical",
-                "Numerical",
-                "N/A",
-                "Numerical (All)",
-            ],
-            "Special Considerations": [
-                "Works best with numerical features",
-                "Both must be continuous",
-                "X must be categorical, Y must be numeric",
-                "X must be categorical, Y must be numeric",
-                "Only one numerical column",
-                "Handles only numerical correlation",
-            ],
-        }
+    def count_plot(self, x_axis):
+        """
+        Creates a count plot to show the distribution of categories in a specified column.
 
-        df_help = pd.DataFrame(help_table)
-        print(df_help)
+         Parameters:
+             x_axis: Column name for x_axis (Numerical)
 
-    plotNames = [
-        "scatterplot",
-        "lineplot",
-        "barplot",
-        "boxplot",
-        "histplot",
-        "heatmap",
-    ]
-
-    def enter_fitures_and_plot(self):
-
-        print(f"Available Plots are : {self.plotNames}, choose one to plot")
-
-        while True:
-            plotName = (
-                input(
-                    "Enter the name of the plot based on the provided list: "
-                )
-                .strip()
-                .lower()
-            )
-            if plotName in self.switch_case:
-                break
-            else:
-                print(
-                    "Invalid plot name. Please choose from the following list: ",
-                    self.plotNames,
-                )
-
-        plot_function = self.switch_case.get(plotName.lower())
-
-        if plot_function:
-            if plotName == "heatmap":
-                plot_function()
-                return
-
-            self.plot_help_table()
-            print("Numerical columns:", self.numerical_cols)
-            print("Categorical columns:", self.categorical_cols)
-            x_selected = (
-                input("Enter column name for X-axis: ").strip().upper()
-            )
-            y_selected = (
-                input("Enter column name for Y-axis: ").strip().upper()
-                if plotName != "histplot"
-                else None
-            )
-
-            if x_selected not in self.dataset.columns or (
-                y_selected and y_selected not in self.dataset.columns
-            ):
-                print(
-                    "Error: Column names are incorrect. Please select from the provided list."
-                )
-                return
-
-            if plotName == "histplot":
-                plot_function(x_selected)
-            else:
-                plot_function(x_selected, y_selected)
+        """
+        plt.figure(figsize=(6, 8))
+        sns.countplot(
+            x=column,
+            data=self.dataset,
+            order=self.dataset[x_axis].value_counts().index,
+        )
+        plt.xlabel(x_axis)
+        plt.ylabel("Count")
+        plt.title(f"Distribution of {x_axis} ")
+        plt.xticks(rotation=45)
+        plt.show()
