@@ -19,6 +19,9 @@ class DataCleaning:
             the dataset that should be clean.
         """
         self.dataset = dataset
+        
+    def remove_whitespace(self):
+        
 
     def missing_values(self):
         """

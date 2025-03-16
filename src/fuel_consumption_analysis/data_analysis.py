@@ -31,7 +31,7 @@ class DataAnalysis:
         pd.DataFrame
             Summary statistics for numerical columns.
         """
-        return self.dataset.description()
+        return self.dataset.describe()
 
     def correlation_matrix(self):
         """
