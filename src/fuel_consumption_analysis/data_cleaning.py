@@ -20,9 +20,6 @@ class DataCleaning:
         """
         self.dataset = dataset
         
-    def remove_whitespace(self):
-        
-
     def missing_values(self):
         """
         finds the missing value in the dataset.
