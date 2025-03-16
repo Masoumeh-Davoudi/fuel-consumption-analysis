@@ -39,7 +39,7 @@ class DataVisualization:
             hue_column: The points are colored based on the hue_column.
 
         If there are too many unique categories in hue column, only the top 5
-        will be displayed while others are grouped as 'other'
+        will be displayed.
         """
 
         dataset_copy = self.dataset.copy()
@@ -81,17 +81,17 @@ class DataVisualization:
 
     def bar_plot(self, x_axis, y_axis, hue_column):
         """
-        Create a line plot to compare categories against a numerical variable.
+        Creates a bar plot to compare categories against a numerical variable.
         Parameters:
             x_axis: Column name for x_axis (Categorical).
             y_axis: Column name for x_axis (Numerical).
             hue_column: Column name to group data by different categories
             (Categorical)
-        If there are too many unique categories in hue column, only the top 5
-        will be displayed while others are grouped as 'other'
         """
 
-        palette = sns.color_palette("Set2")
+        palette = sns.color_palette(
+            "tab20", n_colors=self.dataset[hue_column].nunique()
+        )
 
         # Plot
         plt.figure(figsize=(12, 6))
@@ -103,6 +103,7 @@ class DataVisualization:
             data=self.dataset,
             estimator=np.mean,
             errorbar=None,
+            dodge=True,
         )
 
         plt.title("Average CO₂ Emissions by Fuel Type", fontsize=14)
@@ -114,6 +115,7 @@ class DataVisualization:
             loc="upper left",
             fontsize=10,
         )
+        plt.xticks(rotation=0, ha="center")
         plt.show()
 
     def box_plot(self, x_axis, y_axis):
