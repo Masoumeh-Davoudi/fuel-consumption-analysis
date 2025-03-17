@@ -24,18 +24,42 @@ class DataAnalysis:
 
     def statistical_description(self):
         """
-        Compute descriptive statistics(mean, median, standard deviation, etc.).
+        Computes descriptive statistics(mean, median, SD, etc.).
 
         Returns
         -------
         pd.DataFrame
             Summary statistics for numerical columns.
+
+        Examples
+        --------
+        print(DataAnalysis(data).statistical_description())
         """
         return self.dataset.describe()
 
+    def categorical_description(self):
+        """
+        Counts the values in each categories for object columns in a DataFrame.
+
+        Returns
+        -------
+        None (Prints the results).
+
+        Examples
+        --------
+        print(DataAnalysis(data).categorical_description())
+        """
+        for col in self.dataset.select_dtypes(include=["object"]).columns:
+            print(self.dataset[col].value_counts())
+            print("-" * 35)
+
     def correlation_matrix(self):
         """
-        Compute and visulaize the correlation matrix for numerical features.
+        Computes and visulaize the correlation matrix for numerical features.
+
+        Returns
+        -------
+        None (Plots the heatmap).
         """
         # Select numeric columns
         numeric_data = self.dataset.select_dtypes(include=["number"])
@@ -44,7 +68,8 @@ class DataAnalysis:
             return
         plt.figure(figsize=(10, 6))
         sns.heatmap(
-            numeric_data.corr(), annot=True, cmap="coolwarm", fmt=".2f", linewidths=0.5
+            numeric_data.corr(), annot=True, cmap="coolwarm",
+            fmt=".2f", linewidths=0.5
         )
         plt.title("Correlation Matrix")
         plt.show()
