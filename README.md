@@ -28,7 +28,7 @@ It helps explore fuel efficiency, CO₂ emissions, and other vehicle-related ins
    conda create --name fuel_env python=3.10 -y
    conda activate fuel_env
    ```
-4. Install the Required Dependancies are Installed     
+4. Install the Required Dependancies      
    Ensure the required packages are installed:
    
    ```console
