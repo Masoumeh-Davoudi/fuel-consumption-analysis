@@ -29,7 +29,7 @@ It helps explore fuel efficiency, CO₂ emissions, and other vehicle-related ins
    conda activate fuel_env
    ```
 4. Install the Required Dependancies      
-   Ensure the required packages are installed:
+   Ensure the Required Packages are Installed:
    
    ```console
    pip install numpy pandas matplotlib seaborn
@@ -41,9 +41,9 @@ It helps explore fuel efficiency, CO₂ emissions, and other vehicle-related ins
 ## Usage 
 After the Installation, you can import the package modules:
 ```console
-from fuel_consumption_analysis.data_cleaning import DataCleaning.
-from fuel_consumption_analysis.data_analysis import DataAnalysis.
-from fuel_consumption_analysis.data_visualization import DataVisualization.
+from fuel_consumption_analysis.data_cleaning import DataCleaning
+from fuel_consumption_analysis.data_analysis import DataAnalysis
+from fuel_consumption_analysis.data_visualization import DataVisualization
 ```
 
 ## License
