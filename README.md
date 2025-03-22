@@ -40,11 +40,65 @@ It helps explore fuel efficiency, CO₂ emissions, and other vehicle-related ins
    ```
 ## Usage 
 After the Installation, you can import the package modules:
-```console
+```python
 from fuel_consumption_analysis.data_cleaning import DataCleaning
 from fuel_consumption_analysis.data_analysis import DataAnalysis
 from fuel_consumption_analysis.data_visualization import DataVisualization
 ```
+## DataCleaning Module
+1. **`remove_whitespace():`**  
+    Removes leading and trailing whitespaces from string columns.
+   
+   ```console
+   print(DataCleaning(data).remove_whitespace())
+   ```
+2. **`missing_values():`**  
+   Finds the missing value count in the dataset.
+     
+    ```console
+   print(DataCleaning(data).replace_missing_values())
+   ```   
+3. **`replace_missing_values():`**  
+   Replaces missing values in the datasets:
+   + Categorical value with mode.
+   + Numerical value with mean.
+   <br/><br/>
+    ```console
+    print(DataCleaning(data).replace_missing_values())
+   ```
+5. **`find_duplicates():`**  
+  Finds the duplicate rows in the dataset.
+
+   ```console
+    print(DataCleaning(data).find_duplicates())
+   ```
+6. **`remove_duplicates():`**  
+   Removes duplicate rows from the datasets.
+   
+   ```console
+   cleaned_data = DataCleaning(data).remove_duplicates()
+   print(cleaned_data)
+   ```
+## DataAnalysis Module
+1. **`statistical_description():`**   
+   Computes descriptive statistics(mean, median, SD, etc.).
+
+   ```console
+    print(DataAnalysis(data).statistical_description())
+   ```
+
+2. **`categorical_description():`**  
+    Counts the values in each categories for object columns in a DataFrame.
+
+   ```console
+    print(DataAnalysis(data).categorical_description())
+   ```
+3. **`correlation_matrix():`**  
+   Computes and visualize the correlation matrix for numerical features.
+   
+   ```console
+   DataAnalysis(data).correlation_matrix()
+   ```
 
 ## License
 
