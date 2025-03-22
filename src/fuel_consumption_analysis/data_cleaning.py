@@ -4,6 +4,7 @@ Created on Sat Mar  8 11:29:27 2025
 
 @author: taher
 """
+import pandas as pd
 
 
 class DataCleaning:
@@ -16,8 +17,12 @@ class DataCleaning:
         Parameters
         ----------
         dataset : pd.DataFrame
-            the dataset to be clean.
+            the dataset to be cleaned.
         """
+        assert isinstance(
+            dataset, pd.DataFrame
+        ), "The dataset must be a pandas DataFrame."
+
         self.dataset = dataset
 
     def remove_whitespace(self):
@@ -27,54 +32,51 @@ class DataCleaning:
         Returns
         -------
         pd.DataFrame
-            A dataset with leading and trailing whitespaces is handled.
+            A dataset with leading and trailing whitespaces removed.
 
         """
-        return self.dataset.apply(lambda x:
-                                  x.str.strip() if x.dtype == "object" else x)
+        # Check dataset contain at least one string (object) column
+        assert any(self.dataset.dtypes == "object"), "No string cloumns found"
+
+        return self.dataset.apply(
+            lambda x: x.str.strip() if x.dtype == "object" else x)
 
     def missing_values(self):
         """
-        finds the missing value count in the dataset.
+        Finds the missing value count in the dataset.
 
         Returns
         -------
         pd.Series
-            Number of missing value of each column.
+            Number of missing value in each column.
 
         Examples
         --------
-        >>> data = pd.DataFrame(
-        >>>    {"Name": [
-        >>>        "Tara",
-        >>>        "Alice",
-        >>>        "Ali",
-        >>>        "Sara",
-        >>>        "Fara"
-        >>>    ],
+        >>> data = pd.DataFrame({
+        >>>     "Name": ["Tara", "Alice", "Ali", "Sara", "Fara"],
         >>>     "Age": [24, 33, np.nan, 19, 26],
         >>>     "Salary": [2000, np.nan, 3500, 4000, 2700],
         >>>     "Department": ["Finance", np.nan, "IT", np.nan, "IT"]
-        >>>    }
-        >>> )
+        >>>    })
         >>> print(DataCleaning(data).missing_values())
         """
         return self.dataset.isnull().sum()
 
     def replace_missing_values(self):
         """
-        replaces missing values in the datasets:
-        - categorical value with mode,
-        - numerical value with mean.
+        Replaces missing values in the datasets:
+        - Categorical value with mode,
+        - Numerical value with mean.
 
         Returns
         -------
         pd.DataFrame
-            A dataset that missing values handled.
+            A dataset where missing values are handled.
 
         Examples
         --------
-        >>> DataCleaning(data).replace_missing_values()
+        >>> cleaned_data = DataCleaning(data).replace_missing_values()
+        >>> print(cleaned_data)
         """
         missing_values = self.missing_values()
         if missing_values.sum() == 0:
@@ -94,11 +96,11 @@ class DataCleaning:
 
     def find_duplicates(self):
         """
-        finds the duplicate rows in the dataset.
+        Finds the duplicate rows in the dataset.
 
         Returns
         -------
-        duplicate_rows : pd.DataFrame
+        pd.DataFrame
             DataFrame containing duplicate rows.
 
         Examples
@@ -123,6 +125,7 @@ class DataCleaning:
 
         Examples
         --------
-        >>> DataCleaning(data).remove_duplicates()
+        >>> cleaned_data = DataCleaning(data).remove_duplicates()
+        >>> print(cleaned_data)
         """
         return self.dataset.drop_duplicates()

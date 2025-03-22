@@ -4,6 +4,7 @@ Created on Sat Mar  8 20:07:21 2025
 
 @author: taher
 """
+import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -20,6 +21,10 @@ class DataAnalysis:
         dataset : pd.DataFrame
             The dataset that should be analyse.
         """
+        assert isinstance(
+            dataset, pd.DataFrame
+        ), "The dataset must be a pandas DataFrame."
+
         self.dataset = dataset
 
     def statistical_description(self):
