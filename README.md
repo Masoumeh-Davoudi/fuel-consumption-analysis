@@ -13,7 +13,7 @@
 
 ## Overview
 The `fuel_consumption_analysis` package provides tools for **data analysis** and **visualization** of the FuelConsumption dataset.
-This package focuses on three critical aspects.
+This package focuses on three critical aspects:
 
 1. **Data Cleaning:**
    - Data cleaning is the process of identifying and correcting errors and missing values in datasets.
