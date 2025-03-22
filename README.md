@@ -13,7 +13,20 @@
 
 ## Overview
 The `fuel_consumption_analysis` package provides tools for **data analysis** and **visualization** of the FuelConsumption dataset.
-It helps explore fuel efficiency, CO₂ emissions, and other vehicle-related insights.
+This package focuses on three critical aspects.
+
+1. **Data Cleaning:**
+   - Data cleaning is the process of identifying and correcting errors and missing values in datasets.
+   - It ensures the dataset is accurate, reliable, and suitable for analysis.
+   - It improves data quality and consistency and ensures datasets are complete and structured properly.
+     
+2. **Data Analysis:**  
+   - Data analysis is a process of discovering useful information, concluding, and making decisions based on data.
+   - It uses statistical and computational techniques.
+      
+3. **Data Visualization:**
+   - Data visualization is the process of representing data visually through charts, plots, graphs, and other graphical formats to make it easier to understand and    analyze.
+   - Effective visualization makes complex data more accessible, understandable, and actionable.
 
 ## Installation
 1. Clone the Repository
@@ -45,14 +58,14 @@ from fuel_consumption_analysis.data_cleaning import DataCleaning
 from fuel_consumption_analysis.data_analysis import DataAnalysis
 from fuel_consumption_analysis.data_visualization import DataVisualization
 ```
-## DataCleaning Module
+### DataCleaning Module
 1. **`Handling whitespace:`** Removes leading and trailing whitespaces from string columns.
 2. **`Finding missing values:`** Finds the missing value count in the dataset.
 3. **`Handling missing values:`** Replaces missing values in the datasets.
 4. **`Finding duplicate rows:`** Finds the duplicate rows in the dataset.
 5. **`Removing duplicate rows:`** Removes duplicate rows from the datasets.
 
-## DataAnalysis Module
+### DataAnalysis Module
 1. **`Descriptive statistics:`** Computes descriptive statistics(mean, median, SD, etc.).
 2. **`Categorical variable description:`** Counts the values in each categories for object columns in a DataFrame.
 3. **`Correlation matrix visualization:`** Computes and visualize the correlation matrix for numerical features.
