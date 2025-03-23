@@ -65,11 +65,28 @@ from fuel_consumption_analysis.data_visualization import DataVisualization
 4. **`Finding duplicate rows:`** Finds the duplicate rows in the dataset.
 5. **`Removing duplicate rows:`** Removes duplicate rows from the datasets.
 
+**Example:**  
+**`missing_values():`**  
+   Finds the missing value count in the dataset.
+     
+   ```console
+   print(DataCleaning(data).missing_values())
+   ```   
+
+
 ### DataAnalysis Module
 1. **`Descriptive statistics:`** Computes descriptive statistics(mean, median, SD, etc.).
 2. **`Categorical variable description:`** Counts the values in each categories for object columns in a DataFrame.
 3. **`Correlation matrix visualization:`** Computes and visualize the correlation matrix for numerical features.
-   
+
+**Ecample:**  
+**`categorical_description():`**  
+    Counts the values in each categories for object columns in a DataFrame.
+
+   ```console
+    print(DataAnalysis(data).categorical_description())
+   ```
+
 ### DataVisualization Module
 1. **`Scatter Plot:`** Creates a scatter plots to visualize the relationship between two numerical features.
 2. **`Bar Plot:`** Creates a bar plot to compare categories against a numerical variable.
@@ -77,6 +94,14 @@ from fuel_consumption_analysis.data_visualization import DataVisualization
 4. **`Hist Plot:`** Creates a histogram to show the distribution of a numerical variables.
 5. **`Heat Map Plot:`** Creates a heatmap to visualize the correlation matrix of  the numerical variables.
 6. **`Count Plot:`** Creates a count plot to show the distribution of categories in a specified column.
+
+**Ecample:**    
+**`scatter_plot():`**    
+   Creates a scatter plots to visualize the relationship between two numerical features.
+
+   ```console
+   DataVisualization(data).scatter_plot("ENGINE SIZE", "FUEL CONSUMPTION", "MAKE")
+   ```
 
 ## License
 
