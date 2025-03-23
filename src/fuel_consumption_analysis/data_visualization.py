@@ -73,7 +73,7 @@ class DataVisualization:
 
         dataset_copy = (
             self.dataset.copy()
-        )  # Create a copy to avoid modifying the original dataset
+        )  # Create a copy to avoid modifying the original dataset.
 
         top_categories = (
             dataset_copy[hue_column].value_counts().index[:5]
