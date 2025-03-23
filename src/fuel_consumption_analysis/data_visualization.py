@@ -26,7 +26,8 @@ class DataVisualization:
 
         Parameters
         ----------
-            dataset: The file path to a CSV file containing the data to be visualized.
+        dataset: The file path to a CSV file containing the data to be
+        visualized.
         """
 
         assert isinstance(
@@ -44,14 +45,16 @@ class DataVisualization:
         ----------
             x_axis (str): Column name for the x-axis (numerical).
             y_axis (str): Column name for the y-axis (numerical).
-            hue_column (str): Column name used for color grouping (categorical).
+            hue_column (str): Column name used for color grouping
+            (categorical).
 
         If there are too many unique categories in hue column, only the top 5
         will be displayed.
 
         Example
         -------
-            DataVisualization(cleaned_data).scatter_plot("ENGINE SIZE", "FUEL CONSUMPTION", "MAKE")
+            DataVisualization(cleaned_data).scatter_plot("ENGINE SIZE",
+                        "FUEL CONSUMPTION", "MAKE")
         """
         numerical_cols = self.dataset.select_dtypes(
             include=["number"]
@@ -84,7 +87,8 @@ class DataVisualization:
             dataset_copy[hue_column].isin(top_categories)
         ]
 
-        # Aggregate data by taking the mean of y_axis for each (x_axis, hue_column) pair.
+        # Aggregate data by taking the mean of y_axis for each
+        # (x_axis, hue_column) pair.
         aggregated_data = (
             dataset_filtered.groupby([x_axis, hue_column])[y_axis]
             .mean()
@@ -127,7 +131,8 @@ class DataVisualization:
             (Categorical)
         Example
         -------
-            DataVisualization(cleaned_data).bar_plot("FUEL","COEMISSIONS","VEHICLE CLASS")
+            DataVisualization(cleaned_data).bar_plot("FUEL","COEMISSIONS",
+                                                     "VEHICLE CLASS")
         """
         numerical_cols = self.dataset.select_dtypes(
             include=["number"]
@@ -182,7 +187,8 @@ class DataVisualization:
 
     def box_plot(self, x_axis, y_axis):
         """
-        Creates a box plot to show the distribution of a numerical variable across categorical variable.
+        Creates a box plot to show the distribution of a numerical variable
+        across categorical variable.
 
         Parameters
         ----------
@@ -193,7 +199,8 @@ class DataVisualization:
 
         Example
         -------
-            DataVisualization(cleaned_data).box_plot("VEHICLE CLASS", "FUEL CONSUMPTION")
+            DataVisualization(cleaned_data).box_plot("VEHICLE CLASS",
+                                                     "FUEL CONSUMPTION")
         """
 
         numerical_cols = self.dataset.select_dtypes(
@@ -255,9 +262,11 @@ class DataVisualization:
 
     def heat_map_plot(self):
         """
-        Creates a heatmap to visualize the correlation matrix of  the numerical variables.
+        Creates a heatmap to visualize the correlation matrix of
+        the numerical variables.
 
-        The correlation heatmap helps identify the relationship between numerical variables.
+        The correlation heatmap helps identify the relationship between
+        numerical variables.
 
         Parameters
         ----------
@@ -271,10 +280,12 @@ class DataVisualization:
         numerical_df = self.dataset.select_dtypes(
             include=[np.number]
         )  # Select only numerical columns
+
         print(
-            "This is the list of numerical features that you can check their correclations: "
+            "This is the list of numerical features: ",
+            numerical_df.columns.tolist(),
         )
-        print(numerical_df.columns.tolist())
+        print("you can check their correclations:")
 
         x_selected = input("Please enter the first feature name (x_axis): ")
         y_selected = input("Please enter the second feature name (y_axis): ")
@@ -296,7 +307,8 @@ class DataVisualization:
 
     def count_plot(self, x_axis):
         """
-        Creates a count plot to show the distribution of categories in a specified column.
+        Creates a count plot to show the distribution of categories in a
+        specified column.
 
          Parameters
          ----------
