@@ -7,6 +7,7 @@ Created on Mon Mar 10 22:15:16 2025
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 
 class DataVisualization:
@@ -28,6 +29,10 @@ class DataVisualization:
             dataset: The file path to a CSV file containing the data to be visualized.
         """
 
+        assert isinstance(
+            dataset, pd.DataFrame
+        ), "The dataset must be a pandas DataFrame."
+
         self.dataset = dataset  # Store dataset for visualization
 
     def scatter_plot(self, x_axis, y_axis, hue_column):
@@ -48,6 +53,23 @@ class DataVisualization:
         -------
             DataVisualization(cleaned_data).scatter_plot("ENGINE SIZE", "FUEL CONSUMPTION", "MAKE")
         """
+        numerical_cols = self.dataset.select_dtypes(
+            include=["number"]
+        ).columns.tolist()
+
+        categorical_cols = self.dataset.select_dtypes(
+            include=["object", "category"]
+        ).columns.tolist()
+
+        assert (
+            x_axis in numerical_cols
+        ), f"Error: {x_axis} is not a numerical column"
+        assert (
+            y_axis in numerical_cols
+        ), f"Error: {y_axis} is not a numerical column"
+        assert (
+            hue_column in categorical_cols
+        ), f"Error: {hue_column} is not a categorical column"
 
         dataset_copy = (
             self.dataset.copy()
@@ -107,6 +129,25 @@ class DataVisualization:
         -------
             DataVisualization(cleaned_data).bar_plot("FUEL","COEMISSIONS","VEHICLE CLASS")
         """
+        numerical_cols = self.dataset.select_dtypes(
+            include=["number"]
+        ).columns.tolist()
+
+        categorical_cols = self.dataset.select_dtypes(
+            include=["object", "category"]
+        ).columns.tolist()
+
+        assert (
+            x_axis in categorical_cols
+        ), f"Error: {x_axis} is not a categorical column"
+
+        assert (
+            y_axis in numerical_cols
+        ), f"Error: {y_axis} is not a numerical column"
+
+        assert (
+            hue_column in categorical_cols
+        ), f"Error: {hue_column} is not a categorical column"
 
         # Generate a color pallete based on unique categories in hue_column
         palette = sns.color_palette(
@@ -154,6 +195,23 @@ class DataVisualization:
         -------
             DataVisualization(cleaned_data).box_plot("VEHICLE CLASS", "FUEL CONSUMPTION")
         """
+
+        numerical_cols = self.dataset.select_dtypes(
+            include=["number"]
+        ).columns.tolist()
+
+        categorical_cols = self.dataset.select_dtypes(
+            include=["object", "category"]
+        ).columns.tolist()
+
+        assert (
+            x_axis in categorical_cols
+        ), f"Error: {x_axis} is not a categorical column"
+
+        assert (
+            y_axis in numerical_cols
+        ), f"Error: {y_axis} is not a numerical column"
+
         plt.figure(figsize=(10, 6))
         sns.boxplot(x=x_axis, y=y_axis, data=self.dataset)
         plt.xlabel(x_axis)
@@ -176,6 +234,15 @@ class DataVisualization:
         -------
             DataVisualization(cleaned_data).histogram_plot("COEMISSIONS")
         """
+
+        numerical_cols = self.dataset.select_dtypes(
+            include=["number"]
+        ).columns.tolist()
+
+        assert (
+            x_axis in numerical_cols
+        ), f"Error: {x_axis} is not a Numerical column"
+
         plt.figure(figsize=(10, 8))
         sns.histplot(
             x=x_axis, data=self.dataset, bins=10, kde=True
@@ -208,11 +275,18 @@ class DataVisualization:
             "This is the list of numerical features that you can check their correclations: "
         )
         print(numerical_df.columns.tolist())
+
         x_selected = input("Please enter the first feature name (x_axis): ")
         y_selected = input("Please enter the second feature name (y_axis): ")
+
+        if not x_selected or not y_selected:
+            print("Feature names cannot be empty")
+            return
+
         if x_selected not in numerical_df or y_selected not in numerical_df:
             print("One or both feature names are incorrect")
             return
+
         selected_df = numerical_df[[x_selected, y_selected]]
         corr = selected_df.corr()  # Compute correlation matrix
         sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")
@@ -226,18 +300,27 @@ class DataVisualization:
 
          Parameters
          ----------
-             x_axis: Column name for x_axis (Numerical)
+             x_axis: Column name for x_axis (Categorical)
 
         Example
         -------
             DataVisualization(cleaned_data).count_plot("TRANSMISSION")
 
         """
+        categorical_cols = self.dataset.select_dtypes(
+            include=["object", "category"]
+        ).columns.tolist()
+
+        assert (
+            x_axis in categorical_cols
+        ), f"Error: {x_axis} is not a Categorical column"
+
         plt.figure(figsize=(6, 8))
         sns.countplot(
             x=x_axis,
             data=self.dataset,
             order=self.dataset[x_axis]
+            .astype("category")
             .value_counts()
             .index,  # Sort bars by count
         )
