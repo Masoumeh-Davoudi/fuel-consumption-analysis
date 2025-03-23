@@ -79,7 +79,7 @@ from fuel_consumption_analysis.data_visualization import DataVisualization
 2. **`Categorical variable description:`** Counts the values in each categories for object columns in a DataFrame.
 3. **`Correlation matrix visualization:`** Computes and visualize the correlation matrix for numerical features.
 
-**Ecample:**  
+**Example:**  
 **`categorical_description():`**  
     Counts the values in each categories for object columns in a DataFrame.
 
@@ -95,7 +95,7 @@ from fuel_consumption_analysis.data_visualization import DataVisualization
 5. **`Heat Map Plot:`** Creates a heatmap to visualize the correlation matrix of  the numerical variables.
 6. **`Count Plot:`** Creates a count plot to show the distribution of categories in a specified column.
 
-**Ecample:**    
+**Example:**    
 **`scatter_plot():`**    
    Creates a scatter plots to visualize the relationship between two numerical features.
 
