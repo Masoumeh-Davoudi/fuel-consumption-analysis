@@ -13,7 +13,8 @@ class DataVisualization:
     """
     A class for visualizing data using Seaborn and Matplotlib.
 
-    Attributes:
+    Attributes
+    ----------
         dataset : the dataset used for visualization.
 
     """
@@ -22,7 +23,8 @@ class DataVisualization:
         """
         Initializes the dataset in the DataVisualization class.
 
-        Parameters:
+        Parameters
+        ----------
             dataset: The file path to a CSV file containing the data to be visualized.
         """
 
@@ -33,7 +35,8 @@ class DataVisualization:
         Creates a scatter plots to visualize the relationship between two
         numerical features.
 
-        Parameters:
+        Parameters
+        ----------
             x_axis (str): Column name for the x-axis (numerical).
             y_axis (str): Column name for the y-axis (numerical).
             hue_column (str): Column name used for color grouping (categorical).
@@ -41,7 +44,8 @@ class DataVisualization:
         If there are too many unique categories in hue column, only the top 5
         will be displayed.
 
-        Example:
+        Example
+        -------
             DataVisualization(cleaned_data).scatter_plot("ENGINE SIZE", "FUEL CONSUMPTION", "MAKE")
         """
 
@@ -93,12 +97,14 @@ class DataVisualization:
     def bar_plot(self, x_axis, y_axis, hue_column):
         """
         Creates a bar plot to compare categories against a numerical variable.
-        Parameters:
+        Parameters
+        ----------
             x_axis: Column name for x_axis (Categorical).
             y_axis: Column name for y_axis (Numerical).
             hue_column: Column name to group data by different categories
             (Categorical)
-        Example:
+        Example
+        -------
             DataVisualization(cleaned_data).bar_plot("FUEL","COEMISSIONS","VEHICLE CLASS")
         """
 
@@ -137,13 +143,15 @@ class DataVisualization:
         """
         Creates a box plot to show the distribution of a numerical variable across categorical variable.
 
-        Parameters:
+        Parameters
+        ----------
             x_axis: Column name for x_axis (Categorical).
             y_axis: Column name for y_axis (Numerical).
 
         Box plots help to identify the spread of the data and the outliers.
 
-        Example:
+        Example
+        -------
             DataVisualization(cleaned_data).box_plot("VEHICLE CLASS", "FUEL CONSUMPTION")
         """
         plt.figure(figsize=(10, 6))
@@ -158,12 +166,14 @@ class DataVisualization:
         """
         Creates a histogram to show the distribution of a numerical variables.
 
-        Parameters:
+        Parameters
+        ----------
             x_axis: Column name for x_axis (Numerical)
 
         A KDE (Kernel Density Estimate) curve is overlaid on the histogram.
 
-        Example:
+        Example
+        -------
             DataVisualization(cleaned_data).histogram_plot("COEMISSIONS")
         """
         plt.figure(figsize=(10, 8))
@@ -182,9 +192,11 @@ class DataVisualization:
 
         The correlation heatmap helps identify the relationship between numerical variables.
 
-        Parameters:
+        Parameters
+        ----------
             None
-        Example:
+        Example
+        -------
             DataVisualization(cleaned_data).heat_map_plot()
         """
 
@@ -212,10 +224,12 @@ class DataVisualization:
         """
         Creates a count plot to show the distribution of categories in a specified column.
 
-         Parameters:
+         Parameters
+         ----------
              x_axis: Column name for x_axis (Numerical)
 
-        Example:
+        Example
+        -------
             DataVisualization(cleaned_data).count_plot("TRANSMISSION")
 
         """
