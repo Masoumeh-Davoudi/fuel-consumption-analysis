@@ -33,11 +33,13 @@ class DataCleaning:
         -------
         pd.DataFrame
             A dataset with leading and trailing whitespaces removed.
-
         """
+        self.dataset.columns = self.dataset.columns.str.strip()
+
         # Check dataset contain at least one string (object) column
         assert any(self.dataset.dtypes == "object"), "No string cloumns found"
 
+        # Apply strip() function to remove whitespace from string columns
         return self.dataset.apply(
             lambda x: x.str.strip() if x.dtype == "object" else x)
 
@@ -79,16 +81,20 @@ class DataCleaning:
         >>> print(cleaned_data)
         """
         missing_values = self.missing_values()
+
+        # If there are no missing valuse, return the dataset
         if missing_values.sum() == 0:
             print("No Missing Values in Dataset")
             return self.dataset
         else:
             for column in self.dataset.columns:
                 if self.dataset[column].dtype == "object":
+                    # Fill missing categorical values whit mode
                     self.dataset.loc[:, column] = self.dataset[column].fillna(
                         self.dataset[column].mode()[0]
                     )
                 else:
+                    # Fill missing numerical values whit mean
                     self.dataset.loc[:, column] = self.dataset[column].fillna(
                         self.dataset[column].mean()
                     )
@@ -108,6 +114,8 @@ class DataCleaning:
         >>> print(DataCleaning(data).find_duplicates())
         """
         duplicate_rows = self.dataset[self.dataset.duplicated(keep=False)]
+
+        # Check if any duplicate rows exist
         if duplicate_rows.empty:
             print("No Duplicate Rows in Dataset.")
         else:
