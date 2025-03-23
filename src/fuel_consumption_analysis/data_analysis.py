@@ -56,7 +56,7 @@ class DataAnalysis:
         """
         for col in self.dataset.select_dtypes(include=["object"]).columns:
             print(self.dataset[col].value_counts())
-            print("-" * 35)
+            print("-" * 35)   # Separator for better readability
 
     def correlation_matrix(self):
         """
@@ -68,9 +68,13 @@ class DataAnalysis:
         """
         # Select numeric columns
         numeric_data = self.dataset.select_dtypes(include=["number"])
+
+        # Check if there are numeric columns to analyze
         if numeric_data.empty:
             print("No numeric columns in dataset.")
             return
+
+        # Plot heatmap for correlation matrix
         plt.figure(figsize=(10, 6))
         sns.heatmap(
             numeric_data.corr(), annot=True, cmap="coolwarm",
