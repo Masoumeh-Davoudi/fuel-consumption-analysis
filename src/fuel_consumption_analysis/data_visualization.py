@@ -187,11 +187,22 @@ class DataVisualization:
         Example:
             DataVisualization(cleaned_data).heat_map_plot()
         """
+
         plt.figure(figsize=(10, 8))
         numerical_df = self.dataset.select_dtypes(
             include=[np.number]
         )  # Select only numerical columns
-        corr = numerical_df.corr()  # Compute correlation matrix
+        print(
+            "This is the list of numerical features that you can check their correclations: "
+        )
+        print(numerical_df.columns.tolist())
+        x_selected = input("Please enter the first feature name (x_axis): ")
+        y_selected = input("Please enter the second feature name (y_axis): ")
+        if x_selected not in numerical_df or y_selected not in numerical_df:
+            print("One or both feature names are incorrect")
+            return
+        selected_df = numerical_df[[x_selected, y_selected]]
+        corr = selected_df.corr()  # Compute correlation matrix
         sns.heatmap(corr, annot=True, cmap="coolwarm", fmt=".2f")
         plt.title("Correlation Heatmap for Numerical Features")
         plt.xticks(rotation=45)
