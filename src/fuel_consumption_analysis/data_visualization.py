@@ -84,7 +84,7 @@ class DataVisualization:
             dataset_copy[hue_column].isin(top_categories)
         ]
 
-        # Aggregate data by taking the mean of y_axis for each (x_axis, hue_column) pair
+        # Aggregate data by taking the mean of y_axis for each (x_axis, hue_column) pair.
         aggregated_data = (
             dataset_filtered.groupby([x_axis, hue_column])[y_axis]
             .mean()
